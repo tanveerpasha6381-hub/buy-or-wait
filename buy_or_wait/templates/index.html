@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buy or Wait?</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 8px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f1f1f1;
+        }
+
+        .result h2 {
+            margin-top: 0;
+        }
+
+        .status {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+        }
+
+        .remaining {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💰 Buy or Wait?</h1>
+
+    <p class="subtitle">
+        AI Financial Decision Assistant
+    </p>
+
+    <!-- IMPORTANT:
+         The form must submit to /check because
+         /check accepts POST requests.
+    -->
+    <form method="POST" action="/check">
+
+        <label for="purchase_amount">
+            Purchase Amount
+        </label>
+
+        <input
+            type="number"
+            id="purchase_amount"
+            name="purchase_amount"
+            placeholder="Enter purchase amount"
+            step="0.01"
+            min="0"
+            required
+        >
+
+
+        <label for="current_balance">
+            Current Balance
+        </label>
+
+        <input
+            type="number"
+            id="current_balance"
+            name="current_balance"
+            placeholder="Enter current balance"
+            step="0.01"
+            min="0"
+            required
+        >
+
+
+        <label for="minimum_balance">
+            Minimum Balance to Keep
+        </label>
+
+        <input
+            type="number"
+            id="minimum_balance"
+            name="minimum_balance"
+            placeholder="Enter minimum balance"
+            step="0.01"
+            min="0"
+            required
+        >
+
+
+        <label for="currency">
+            Currency
+        </label>
+
+        <select
+            id="currency"
+            name="currency"
+        >
+            <option value="INR">INR</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="ZAR">ZAR</option>
+            <option value="IDR">IDR</option>
+        </select>
+
+
+        <button type="submit">
+            Check Affordability
+        </button>
+
+    </form>
+
+
+    {% if result %}
+
+    <div class="result">
+
+        <h2>Result</h2>
+
+        <div class="status">
+            {{ result.status }}
+        </div>
+
+        <div class="message">
+            {{ result.message }}
+        </div>
+
+        <div class="remaining">
+            Remaining Balance:
+            {{ result.remaining_balance }}
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
